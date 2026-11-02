@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Warung Sayur Visya</title>
+  <style>
+    :root{
+      --green-1: #f1fbe8;
+      --green-2: #dff7d0;
+      --green-3: #bfe7a1;
+      --green-4: #7fc55b;
+      --green-5: #3a7d32;
+      --green-6: #214d26;
+      --orange: #ffb347;
+      --orange-deep: #f58a1f;
+      --red: #ff6a5c;
+      --cream: #fffdf7;
+      --text: #1b2e1d;
+      --muted: #5d6d62;
+      --shadow: 0 20px 45px rgba(36, 82, 37, 0.14);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(180deg, #f8fff5 0%, #edf9e6 100%);
+      color: var(--text);
+    }
+
+    a{ text-decoration:none; color:inherit; }
+    img{max-width:100%; display:block}
+
+    .container{
+      width:min(1180px, calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    header{
+      position: sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.72);
+      border-bottom: 1px solid rgba(35, 92, 44, 0.08);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      min-height:78px;
+      gap:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      font-size:1.25rem;
+      color: var(--green-6);
+    }
+
+    .brand-mark{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      background: linear-gradient(135deg, #d9f5a9, #6ecb4c);
+      position:relative;
+      box-shadow: inset 0 -6px 10px rgba(0,0,0,0.08);
+    }
+
+    .brand-mark::before,
+    .brand-mark::after{
+      content:"";
+      position:absolute;
+      background: #3c9f31;
+      border-radius:50%;
+      left:50%; transform:translateX(-50%);
+    }
+
+    .brand-mark::before{
+      width:18px; height:18px; top:10px; left:50%;
+      box-shadow:
+        -10px 6px 0 2px #5abf48,
+        10px 6px 0 2px #5abf48,
+        0 12px 0 3px #7cc75d;
+    }
+
+    .brand-mark::after{
+      width:26px; height:10px; bottom:7px; left:50%;
+      transform:translateX(-50%);
+      border-radius: 50%;
+      background: #f4d66c;
+    }
+
+    .nav-links{
+      display:flex;
+      gap:24px;
+      font-weight:600;
+      color: var(--green-6);
+    }
+
+    .nav-links a{
+      opacity:.85;
+      transition: .2s ease;
+    }
+
+    .nav-links a:hover{opacity:1}
+
+    .nav-btn{
+      border:none;
+      background: linear-gradient(135deg, #7bc95a, #4ea33d);
+      color:white;
+      padding:12px 18px;
+      border-radius:999px;
+      font-weight:700;
+      box-shadow: 0 10px 20px rgba(76, 162, 63, 0.26);
+      cursor:pointer;
+    }
+
+    .hero{
+      position:relative;
+      padding:72px 0 54px;
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      width:760px;
+      height:760px;
+      right:-160px;
+      top:-220px;
+      background: radial-gradient(circle, rgba(138, 202, 85, 0.18), rgba(138, 202, 85, 0));
+      z-index:0;
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items:center;
+      gap:36px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      padding:10px 16px;
+      border-radius:999px;
+      background: rgba(116, 185, 74, 0.12);
+      color: var(--green-5);
+      font-weight:700;
+      letter-spacing:.02em;
+      border:1px solid rgba(80, 153, 62, 0.15);
+      margin-bottom:22px;
+    }
+
+    h1{
+      margin:0 0 20px;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      line-height: .96;
+      letter-spacing:-.05em;
+      color: var(--green-6);
+    }
+
+    .accent{
+      color: var(--green-4);
+    }
+
+    .lead{
+      font-size:1.1rem;
+      line-height:1.8;
+      color: var(--muted);
+      max-width: 600px;
+      margin:0 0 28px;
+    }
+
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:16px;
+      margin-bottom:30px;
+    }
+
+    .button{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:none;
+      border-radius:999px;
+      padding:16px 26px;
+      font-weight:800;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+
+    .button.primary{
+      background: linear-gradient(135deg, #8bd568, #4b9d3f);
+      color:white;
+      box-shadow: 0 18px 25px rgba(78, 155, 52, 0.23);
+    }
+
+    .button.secondary{
+      background: white;
+      border:1px solid rgba(20,70,30,0.1);
+      color: var(--green-6);
+      box-shadow: 0 10px 18px rgba(28, 59, 30, 0.06);
+    }
+
+    .mini-stats{
+      display:flex;
+      flex-wrap:wrap;
+      gap:16px;
+      margin-top:18px;
+    }
+
+    .stat{
+      background: rgba(255,255,255,0.7);
+      border:1px solid rgba(30, 82, 40, 0.08);
+      border-radius:18px;
+      padding:14px 16px;
+      min-width:145px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat strong{
+      display:block;
+      font-size:1.35rem;
+      color: var(--green-6);
+      margin-bottom:6px;
+    }
+
+    .stat span{
+      color: var(--muted);
+      font-size:.9rem;
+    }
+
+    .hero-visual{
+      position:relative;
+      min-height:560px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .visual-card{
+      position:relative;
+      width:min(440px, 100%);
+      height:500px;
+      border-radius:32px;
+      background: linear-gradient(180deg, #f8fff4 0%, #dff7cf 100%);
+      border:1px solid rgba(39, 102, 43, 0.07);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .visual-card::before{
+      content:"";
+      position:absolute;
+      inset:18px;
+      border-radius:26px;
+      background:
+        radial-gradient(circle at 20% 22%, rgba(255,255,255,0.9), transparent 15%),
+        radial-gradient(circle at 50% 100%, rgba(107, 190, 89, 0.12), transparent 40%);
+      border:1px solid rgba(66,118,61,0.08);
+    }
+
+    .veg{
+      position:absolute;
+      display:block;
+      filter: drop-shadow(0 14px 18px rgba(44, 95, 35, 0.18));
+    }
+
+    .veg-lettuce{
+      width:180px; height:160px;
+      left:58px; top:72px;
+      border-radius: 52% 48% 50% 50% / 58% 56% 44% 42%;
+      background: linear-gradient(145deg, #8be066, #3ba449);
+      transform: rotate(-12deg);
+    }
+
+    .veg-lettuce::before,
+    .veg-lettuce::after{
+      content:"";
+      position:absolute;
+      background: #49cb5c;
+      border-radius:50%;
+      top:-14px;
+      left:50%;
+      transform:translateX(-50%);
+    }
+
+    .veg-lettuce::before{
+      width:130px; height:72px;
+      box-shadow:
+        -40px 18px 0 5px #5bc35d,
+         40px 16px 0 5px #5bc35d,
+        -18px 26px 0 5px #8ddc72,
+         18px 26px 0 5px #8ddc72;
+    }
+
+    .veg-lettuce::after{
+      width:80px; height:60px;
+      top: 22px;
+      left: 50%;
+      background: #3d9d4a;
+      opacity:.8;
+    }
+
+    .veg-carrot{
+      width:150px; height:190px;
+      right:52px; bottom:70px;
+      background: linear-gradient(135deg, #ffbf52, #f68a1f);
+      border-radius: 48% 52% 56% 44% / 62% 40% 60% 38%;
+      transform: rotate(18deg);
+    }
+
+    .veg-carrot::before{
+      content:"";
+      position:absolute;
+      width:22px; height:62px;
+      background: #6dba3d;
+      border-radius: 16px;
+      left:50%;
+      top:-34px;
+      transform: translateX(-50%) rotate(-12deg);
+      box-shadow:
+        -14px 1px 0 -3px #7acb46,
+        14px 0 0 -3px #7acb46;
+    }
+
+    .veg-carrot::after{
+      content:"";
+      position:absolute;
+      width:84px; height:78px;
+      top: 20px;
+      left: 32px;
+      background: rgba(255,255,255,0.13);
+      border-radius: 42% 58% 55% 45% / 58% 36% 64% 42%;
+      transform: rotate(-18deg);
+    }
+
+    .veg-tomato{
+      width:150px; height:150px;
+      left:180px; bottom:68px;
+      background: linear-gradient(135deg, #ff7a5c, #f14638);
+      border-radius:50%;
+      box-shadow: inset -10px -8px 0 rgba(158, 42, 34, 0.14);
+    }
+
+    .veg-tomato::before{
+      content:"";
+      position:absolute;
+      width:70px; height:36px;
+      left:40px; top:-18px;
+      background: #75d65a;
+      border-radius: 26px 26px 12px 12px / 20px 20px 12px 12px;
+      transform: rotate(-8deg);
+      box-shadow:
+        -30px 10px 0 -8px #73cf56,
+        30px 8px 0 -5px #65cb5d;
+    }
+
+    .veg-tomato::after{
+      content:"";
+      position:absolute;
+      width:22px; height:22px;
+      left:60px; top:60px;
+      border-radius:50%;
+      background: rgba(255,255,255,0.22);
+      box-shadow:
+        -26px 10px 0 4px rgba(255,255,255,0.14),
+        26px -6px 0 4px rgba(255,255,255,0.12);
+    }
+
+    .floating-tag{
+      position:absolute;
+      background:white;
+      border:1px solid rgba(21, 69, 32, 0.08);
+      box-shadow: 0 18px 25px rgba(25, 75, 30, 0.08);
+      border-radius:16px;
+      padding:12px 14px;
+      font-weight:700;
+      color: var(--green-6);
+      z-index:2;
+    }
+
+    .tag-1{ left:20px; bottom:26px; }
+    .tag-2{ right:18px; top:68px; }
+
+    .section{
+      padding: 36px 0 20px;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:30px;
+    }
+
+    .section-title h2{
+      margin:0;
+      font-size: clamp(2rem, 3vw, 3rem);
+      color: var(--green-6);
+      letter-spacing:-.04em;
+    }
+
+    .section-title p{
+      margin:10px auto 0;
+      max-width:680px;
+      color: var(--muted);
+      font-size:1.04rem;
+      line-height:1.8;
+    }
+
+    .feature-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:22px;
+      margin-top:32px;
+    }
+
+    .feature-card{
+      background: rgba(255,255,255,0.8);
+      border:1px solid rgba(22, 79, 31, 0.08);
+      border-radius:22px;
+      padding:28px 22px 26px;
+      box-shadow: 0 18px 30px rgba(38, 88, 48, 0.06);
+    }
+
+    .icon{
+      width:64px;
+      height:64px;
+      display:grid;
+      place-items:center;
+      border-radius:18px;
+      margin-bottom:18px;
+      font-size:2rem;
+      background: linear-gradient(135deg, #def7c6, #bfe79f);
+    }
+
+    .feature-card h3{
+      margin:0 0 12px;
+      font-size:1.4rem;
+      color: var(--green-6);
+    }
+
+    .feature-card p{
+      margin:0;
+      line-height:1.7;
+      color: var(--muted);
+    }
+
+    .catalog{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:22px;
+      margin-top:36px;
+    }
+
+    .product{
+      background:white;
+      border:1px solid rgba(33, 77, 38, 0.08);
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow: 0 18px 30px rgba(30, 76, 37, 0.07);
+    }
+
+    .product-visual{
+      height:210px;
+      position:relative;
+      background: linear-gradient(180deg, #f4ffe8, #e2f8d4);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:90px;
+    }
+
+    .product-body{
+      padding:20px 20px 24px;
+    }
+
+    .product-body h3{
+      margin:0 0 8px;
+      font-size:1.35rem;
+      color: var(--green-6);
+    }
+
+    .product-body p{
+      margin:0 0 16px;
+      color: var(--muted);
+      line-height:1.7;
+    }
+
+    .price-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .price{
+      font-size:1.4rem;
+      font-weight:900;
+      color: var(--green-5);
+    }
+
+    .tag-price{
+      background: rgba(82, 176, 52, 0.12);
+      color: var(--green-5);
+      font-weight:700;
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:.78rem;
+    }
+
+    .contact-wrap{
+      margin-top:36px;
+      background: linear-gradient(135deg, #eafcdd 0%, #f7fff3 100%);
+      border:1px solid rgba(34, 107, 42, 0.08);
+      border-radius:30px;
+      padding:28px;
+      box-shadow: 0 20px 34px rgba(40, 108, 45, 0.08);
+    }
+
+    .contact-grid{
+      display:grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap:22px;
+      align-items:center;
+    }
+
+    .contact-copy h2{
+      margin:0 0 12px;
+      font-size:clamp(2rem, 3vw, 2.8rem);
+      letter-spacing:-.04em;
+      color: var(--green-6);
+    }
+
+    .contact-copy p{
+      margin:0 0 20px;
+      line-height:1.8;
+      color: var(--muted);
+    }
+
+    .info-list{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:grid;
+      gap:12px;
+    }
+
+    .info-list li{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px 14px;
+      background: rgba(255,255,255,0.76);
+      border:1px solid rgba(39, 89, 43, 0.08);
+      border-radius:14px;
+      color: var(--text);
+      font-weight:600;
+    }
+
+    .info-list .dot{
+      width:12px; height:12px;
+      border-radius:50%;
+      background: linear-gradient(135deg, #7fd05a, #3a9d46);
+      box-shadow: 0 0 0 5px rgba(109, 191, 91, 0.13);
+      flex-shrink:0;
+    }
+
+    .contact-box{
+      min-height:260px;
+      position:relative;
+      background: linear-gradient(135deg, #ffffff, #f2ffe8);
+      border:1px solid rgba(35, 90, 41, 0.08);
+      border-radius:24px;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .contact-box .salad{
+      position:absolute;
+      width:230px;
+      height:230px;
+      border-radius:50%;
+      background: linear-gradient(135deg, #90dd73, #4aa24f);
+      box-shadow: inset -16px -14px 0 rgba(38, 93, 37, 0.12);
+    }
+
+    .contact-box .salad::before,
+    .contact-box .salad::after{
+      content:"";
+      position:absolute;
+      background: #5bc559;
+      border-radius:50%;
+    }
+
+    .contact-box .salad::before{
+      width:130px; height:80px;
+      left:50%; top:-17px;
+      transform:translateX(-50%);
+      box-shadow:
+        -32px 24px 0 0 #6cd36f,
+         32px 24px 0 0 #6cd36f,
+        -16px 38px 0 0 #8ee87f,
+         16px 38px 0 0 #8ee87f;
+    }
+
+    .contact-box .salad::after{
+      width:120px; height:120px;
+      left:50%; top:54px;
+      transform:translateX(-50%);
+      background: rgba(255,255,255,0.08);
+      border-radius:50%;
+    }
+
+    .callout{
+      position:relative;
+      z-index:1;
+      background: rgba(255,255,255,0.9);
+      border:1px solid rgba(28, 79, 31, 0.06);
+      box-shadow: 0 16px 30px rgba(39, 94, 42, 0.08);
+      border-radius:18px;
+      padding:16px 18px;
+      width:200px;
+      text-align:center;
+      font-weight:800;
+      color: var(--green-6);
+    }
+
+    footer{
+      padding:22px 0 46px;
+      text-align:center;
+      color: var(--muted);
+      font-weight:600;
+    }
+
+    @media (max-width: 920px){
+      .hero-inner,
+      .contact-grid{
+        grid-template-columns:1fr;
+      }
+
+      .feature-grid,
+      .catalog{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .hero-visual{
+        min-height:420px;
+      }
+    }
+
+    @media (max-width: 640px){
+      .nav{
+        flex-wrap:wrap;
+        justify-content:center;
+        padding:10px 0;
+      }
+
+      .nav-links{
+        width:100%;
+        justify-content:center;
+        flex-wrap:wrap;
+        gap:12px 18px;
+      }
+
+      .feature-grid,
+      .catalog{
+        grid-template-columns:1fr;
+      }
+
+      .hero{
+        padding-top:50px;
+      }
+
+      .visual-card{
+        height:430px;
+      }
+
+      .veg-lettuce{
+        width:150px; height:130px;
+        left:32px; top:88px;
+      }
+
+      .veg-tomato{
+        width:120px; height:120px;
+        left:135px; bottom:54px;
+      }
+
+      .veg-carrot{
+        width:120px; height:160px;
+        right:32px; bottom:70px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Warung Sayur Visya</span>
+      </div>
+
+      <nav class="nav-links" aria-label="Navigasi utama">
+        <a href="#home">Home</a>
+        <a href="#produk">Produk</a>
+        <a href="#unggulan">Unggulan</a>
+        <a href="#kontak">Kontak</a>
+      </nav>
+
+      <button class="nav-btn">Pesan Sekarang</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-inner">
+        <div>
+          <div class="eyebrow">Segar • Organik • Berkualitas</div>
+          <h1>Sayur <span class="accent">segar</span> untuk hari sehat Anda.</h1>
+          <p class="lead">
+            Warung Sayur Visya menghadirkan pilihan sayuran segar, berkualitas, dan pilihan terbaik
+            untuk kebutuhan keluarga Anda setiap hari. Dari tomat, bayam, sawi, hingga sayur organik.
+          </p>
+
+          <div class="cta-row">
+            <button class="button primary">Lihat Produk</button>
+            <button class="button secondary">Hubungi Kami</button>
+          </div>
+
+          <div class="mini-stats">
+            <div class="stat">
+              <strong>1.2k+</strong>
+              <span>Pelanggan puas</span>
+            </div>
+            <div class="stat">
+              <strong>24 Jam</strong>
+              <span>Pengiriman cepat</span>
+            </div>
+            <div class="stat">
+              <strong>100%</strong>
+              <span>Sayur segar</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Ilustrasi sayuran">
+          <div class="visual-card">
+            <div class="veg veg-lettuce"></div>
+            <div class="veg veg-tomato"></div>
+            <div class="veg veg-carrot"></div>
+
+            <div class="floating-tag tag-1">Organik</div>
+            <div class="floating-tag tag-2">Segar Hari Ini</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="unggulan">
+      <div class="container">
+        <div class="section-title">
+          <h2>Kenapa memilih kami?</h2>
+          <p>
+            Kami fokus pada kualitas sayur yang segar, dipetik dengan hati-hati, dan disiapkan
+            untuk menjaga kebutuhan nutrisi keluarga Anda tetap terpenuhi.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="icon">🥬</div>
+            <h3>Sayur Segar</h3>
+            <p>Setiap sayur dipilih dengan teliti agar tetap renyah, segar, dan bergizi tinggi.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="icon">🌿</div>
+            <h3>Higienis</h3>
+            <p>Proses penyimpanan dan pengemasan dilakukan dengan standar kebersihan yang terjaga.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="icon">🚚</div>
+            <h3>Pengiriman Cepat</h3>
+            <p>Kami siap mengantarkan kebutuhan sayur Anda dengan cepat dan tepat waktu.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="produk">
+      <div class="container">
+        <div class="section-title">
+          <h2>Produk favorit kami</h2>
+          <p>
+            Pilihan sayur paling laris untuk kebutuhan harian keluarga Anda, lengkap dan tetap terjangkau.
+          </p>
+        </div>
+
+        <div class="catalog">
+          <article class="product">
+            <div class="product-visual" aria-hidden="true">🥬</div>
+            <div class="product-body">
+              <h3>Selada Organik</h3>
+              <p>Segar, renyah, dan cocok untuk salad, jus, atau pelengkap hidangan sehat.</p>
+              <div class="price-row">
+                <span class="price">Rp 12.000</span>
+                <span class="tag-price">Best Seller</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="product">
+            <div class="product-visual" aria-hidden="true">🥕</div>
+            <div class="product-body">
+              <h3>Wortel Segar</h3>
+              <p>Mengandung vitamin dan cocok untuk sup, tumis, atau camilan sehat keluarga.</p>
+              <div class="price-row">
+                <span class="price">Rp 15.000</span>
+                <span class="tag-price">Laris</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="product">
+            <div class="product-visual" aria-hidden="true">🍅</div>
+            <div class="product-body">
+              <h3>Tomat Fresh</h3>
+              <p>Tomat berkualitas untuk masakan, sambal, atau dibuat jus segar di rumah.</p>
+              <div class="price-row">
+                <span class="price">Rp 18.000</span>
+                <span class="tag-price">Fresh</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="kontak">
+      <div class="container">
+        <div class="contact-wrap">
+          <div class="contact-grid">
+            <div class="contact-copy">
+              <h2>Pesan sayur segar hari ini</h2>
+              <p>
+                Kami siap melayani kebutuhan sayuran keluarga Anda dengan kualitas terbaik dan
+                pelayanan yang ramah serta cepat.
+              </p>
+
+              <ul class="info-list">
+                <li><span class="dot"></span> <span>Lokasi: </span></li>
+                <li><span class="dot"></span> <span>WhatsApp: </span></li>
+                <li><span class="dot"></span> <span>Jam Operasional: 07.00 - 20.00</span></li>
+              </ul>
+            </div>
+
+            <div class="contact-box" aria-label="Ilustrasi sayuran dekoratif">
+              <div class="salad"></div>
+              <div class="callout">Segar Setiap Hari</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Warung Sayur Visya — Segar untuk hidup lebih sehat
+  </footer>
+</body>
+</html>
